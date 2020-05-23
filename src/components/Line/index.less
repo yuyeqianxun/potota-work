@@ -1,0 +1,48 @@
+.line {
+    height: 60px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .line-left {
+        display: flex;
+        width: calc(100% - 25px);
+        .line-img {
+            width: 60px;
+            border-radius: 10px;
+            img {
+                height: 60px;
+            }
+        }
+        .round {
+            border-radius: 50%;
+        }
+        .line-index {
+            display: block;
+            width: 42px;
+            line-height: 60px;
+            text-align: center;
+        }
+        .line-main {
+            padding-left: 15px;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            width: calc(100% - 90px);
+            .line-name {
+                color: @title;
+                .text-over;
+            }
+            .line-desc {
+                color: @common;
+                font-size: 14px;
+                .text-over;
+            }
+        }
+    }
+    .line-right {
+        color: @common;
+        width: 25px;
+        display: block;
+    }
+}
