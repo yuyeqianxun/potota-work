@@ -1,18 +1,32 @@
 .tabs {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     .tabs-title {
         display: flex;
         height: 50px;
     }
+    .tabs-cont {
+        width: 400%;
+        display: flex;
+    }
     &-bottom {
         flex-direction: column-reverse;
+        .tabs-title {
+            justify-content: space-around;
+        }
         .tabs-cont {
             height: calc(100vh - 50px);
             overflow: hidden;
             &>div {
                 overflow: auto;
+                flex: 1;
             }
         }
+    }
+}
+.animation {
+    .tabs-cont {
+        transition: all 0.5s;
     }
 }

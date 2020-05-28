@@ -1,11 +1,14 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+import { connect } from "react-redux"
+import * as recommendAction from '../../store/recommend'
 import Head from '../../components/Head'
 import Contain from '../../components/Contain'
 import Line from '../../components/Line'
 import Square from '../../components/Square'
 import Tabs, { TabItem } from '../../components/Tabs'
+import Scroll from '../../components/Scroll'
 import './index.less'
-export default memo(function Recommend() {
+function Recommend() {
 
     let left = {
         icon: 'sousuo'
@@ -39,16 +42,24 @@ export default memo(function Recommend() {
 
     let TabList = [
         {
-            title: '主页'
+            title: '主页',
+            icon: 'iconzhuye',
+            children: 123
         },
         {
-            title: '搜索'
+            title: '搜索',
+            icon: 'iconsousuo',
+            children: 456
         },
         {
-            title: '排行'
+            title: '排行',
+            icon: 'iconliuyan',
+            children: 789
         },
         {
-            title: '我的'
+            title: '我的',
+            icon: 'icongeren',
+            children: 101112
         }
     ]
 
@@ -68,6 +79,7 @@ export default memo(function Recommend() {
 
     return (
         <div className="recommend">
+            <Scroll>
             <Head 
                 left={left}
                 right={right}
@@ -91,6 +103,38 @@ export default memo(function Recommend() {
                     })
                 }
             </Tabs>
+            <Tabs bottom animation>
+                {
+                    TabList.map((item)=>
+                        (<TabItem title={item.title} key={item.title} icon={item.icon}>
+                            { item.children }
+                        </TabItem>)
+                    )
+                }
+            </Tabs>
+            </Scroll>
+            
         </div>
     )
-})
+}
+
+const mapStateToProps = (state) => ({
+    // 不要在这里将数据 toJS
+    // 不然每次 diff 比对 props 的时候都是不一样的引用，还是导致不必要的重渲染，属于滥用 immutable
+    bannerList: state.getIn (['recommend', 'bannerList']),
+    recommendList: state.getIn (['recommend', 'recommendList']),
+});
+// 映射 dispatch 到 props 上
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getBannerDataDispatch () {
+            // dispatch (actionTypes.getBannerList ());
+        },
+        getRecommendListDataDispatch () {
+            // dispatch (actionTypes.getRecommendList ());
+        },
+    }
+};
+  
+//   // 将 ui 组件包装成容器组件
+export default connect (mapStateToProps, mapDispatchToProps)(memo(Recommend));

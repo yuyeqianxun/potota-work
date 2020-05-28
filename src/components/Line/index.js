@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-// import "./index.less";
+import "./index.less";
 
 export default memo(function Line(props) {
   const { img, name, desc, icon, round, index } = props;
