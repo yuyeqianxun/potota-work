@@ -11,16 +11,12 @@ const type = {
   CHANGE_RECOMMEND_LIST: "recommend/RECOMMEND_LIST",
 };
 
-const reducer = produce((state = defaultState, action) => {
+const reducer = produce((draft, action) => {
   switch (action.type) {
     case type.CHANGE_BANNER:
-      return state.set("bannerList", action.data);
-    case type.CHANGE_RECOMMEND_LIST:
-      return state.set("recommendList", action.data);
-    default:
-      return state;
+      draft.bannerList = action.data
   }
-});
+}, defaultState);
 
 export const changeBannerList = (data) => ({
   type: type.CHANGE_BANNER,
@@ -38,8 +34,8 @@ export const getBannerList = () => {
       .then((data) => {
         dispatch(changeBannerList(data.banners));
       })
-      .catch(() => {
-        console.log("轮播图数据传输错误");
+      .catch((err) => {
+        console.log(err,"轮播图数据传输错误");
       });
   };
 };

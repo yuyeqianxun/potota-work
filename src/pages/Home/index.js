@@ -7,7 +7,6 @@ export default memo(function Home(props) {
 
     return (
         <div>
-            
             { renderRoutes(route.routes) }
         </div>
     )

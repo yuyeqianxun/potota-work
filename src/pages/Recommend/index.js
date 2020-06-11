@@ -1,15 +1,20 @@
 import React, { memo, useEffect } from 'react'
-import { connect } from "react-redux"
-import * as recommendAction from '../../store/recommend'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBannerList, getRecommendList } from '../../store/recommend'
 import Head from '../../components/Head'
 import Contain from '../../components/Contain'
 import Line from '../../components/Line'
 import Square from '../../components/Square'
 import Tabs, { TabItem } from '../../components/Tabs'
 import Scroll from '../../components/Scroll'
+import Banner from '../../components/Banner'
 import './index.less'
-function Recommend() {
-
+export default memo(function Recommend() {
+    const dispatch = useDispatch()
+    useEffect (() => {
+        // dispatch(getBannerList());
+        // dispatch(getRecommendList());
+    }, []);
     let left = {
         icon: 'sousuo'
     }
@@ -63,6 +68,21 @@ function Recommend() {
         }
     ]
 
+    let banners = [
+        {
+            id: 1,
+            url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590810303097&di=3c2cf67d69c6a27d4a2ea2aef85884bc&imgtype=0&src=http%3A%2F%2Fcdn.52ppt.com%2Fd%2Ffile%2Fbeijing%2F201307%2F2013071121053442.jpg'
+        },
+        {
+            id: 2,
+            url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590810399931&di=6eff0baeaa3bd85f3f0a44dba2d4fe55&imgtype=0&src=http%3A%2F%2Fpic17.nipic.com%2F20111123%2F8830238_191314807000_2.jpg'
+        },
+        {
+            id: 3,
+            url: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1444849906,3162001783&fm=26&gp=0.jpg'
+        }
+    ]
+
     const daily = (()=>(
         recommend.map((item,index)=>(
             <Line {...item} icon="gengduo" key={index} index={index}/>
@@ -79,7 +99,11 @@ function Recommend() {
 
     return (
         <div className="recommend">
-            <Scroll>
+            {/* <Scroll> */}
+            <Banner 
+                banners={banners}
+                loop
+            />
             <Head 
                 left={left}
                 right={right}
@@ -112,29 +136,8 @@ function Recommend() {
                     )
                 }
             </Tabs>
-            </Scroll>
+            {/* </Scroll> */}
             
         </div>
     )
-}
-
-const mapStateToProps = (state) => ({
-    // 不要在这里将数据 toJS
-    // 不然每次 diff 比对 props 的时候都是不一样的引用，还是导致不必要的重渲染，属于滥用 immutable
-    bannerList: state.getIn (['recommend', 'bannerList']),
-    recommendList: state.getIn (['recommend', 'recommendList']),
-});
-// 映射 dispatch 到 props 上
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getBannerDataDispatch () {
-            // dispatch (actionTypes.getBannerList ());
-        },
-        getRecommendListDataDispatch () {
-            // dispatch (actionTypes.getRecommendList ());
-        },
-    }
-};
-  
-//   // 将 ui 组件包装成容器组件
-export default connect (mapStateToProps, mapDispatchToProps)(memo(Recommend));
+})
